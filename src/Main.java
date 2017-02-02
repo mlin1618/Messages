@@ -113,44 +113,49 @@ public class Main {
                     }
                     users.get(phoneNum).createNewList(mlName,users.get(phoneNum2));
                 } else if (num1.equals("2")) {
-                    System.out.println("Here are your Conversations: ");
-                    for(int i = 0; i < users.get(phoneNum).messages.size(); i++){
-                        System.out.println("[" + i + "]" + users.get(phoneNum).messages.get(i).name + "("+users.get(phoneNum).messages.get(i).you.number +")");
+                    if(users.get(phoneNum).messages.size()==0){
+                        System.out.println("You currently have no conversations.");
                     }
-                    System.out.println("Enter the number (in the bracket) of the Conversation you want to access.");
-                    int num2 = scan.nextInt();
-                    scan.nextLine();
-                    loop3:while(true) {
-                        System.out.println("\nWhat would you like to do? (1) Display Conversation (2) Send Message (3) Remove Message (4) Clear Conversation (5) Move Message to other Conversation (6) Leave Conversation");
-                        String num3 = scan.nextLine();
-                        if (num3.equals("1")) {
-                            users.get(phoneNum).messages.get(num2).display();
-                        } else if (num3.equals("2")) {
-                            System.out.println("Enter the message you wish to send");
-                            String mText = scan.nextLine();
-                            Message sendM = new Message(users.get(phoneNum).number, mText);
-                            users.get(phoneNum).sendMessage(num2, sendM, users.get(phoneNum).messages.get(num2).you);
-                        } else if (num3.equals("3")) {
-                            System.out.println("Enter the # of the message (the # in curly braces on the left) you wish to delete. Note: the other person can still view the message.");
-                            int numMessageDel = scan.nextInt();
-                            scan.nextLine();
-                            users.get(phoneNum).messages.get(num2).remove(users.get(phoneNum).messages.get(num2).m.size() -numMessageDel);
-                        } else if (num3.equals("4")) {
-                            users.get(phoneNum).messages.get(num2).erase();
-                            System.out.println("Conversation cleared. (Note: the other person can still view the conversation.");
-                        } else if (num3.equals("5")) {
-                            System.out.println("Enter the # of the message (the # in curly braces on the left) you wish to move.");
-                            int numMessageMove = scan.nextInt();
-                            System.out.println("Enter the # of the Conversation you wish to move this message to.");
-                            int numConvoMove = scan.nextInt();
-                            users.get(phoneNum).messages.get(num2).moveMessage(users.get(phoneNum).messages.get(num2).m.size() -numMessageMove,users.get(phoneNum).messages.get(numConvoMove));
-                            System.out.println("Message successfully moved.");
-                            scan.nextLine();
-                        } else if(num3.equals("6")){
-                            break loop3;
+                    else {
+                        System.out.println("Here are your Conversations: ");
+                        for (int i = 0; i < users.get(phoneNum).messages.size(); i++) {
+                            System.out.println("[" + i + "]" + users.get(phoneNum).messages.get(i).name + "(" + users.get(phoneNum).messages.get(i).you.number + ")");
+                        }
+                        System.out.println("Enter the number (in the bracket) of the Conversation you want to access.");
+                        int num2 = scan.nextInt();
+                        scan.nextLine();
+                        loop3:
+                        while (true) {
+                            System.out.println("\nWhat would you like to do? (1) Display Conversation (2) Send Message (3) Remove Message (4) Clear Conversation (5) Move Message to other Conversation (6) Leave Conversation");
+                            String num3 = scan.nextLine();
+                            if (num3.equals("1")) {
+                                users.get(phoneNum).messages.get(num2).display();
+                            } else if (num3.equals("2")) {
+                                System.out.println("Enter the message you wish to send");
+                                String mText = scan.nextLine();
+                                Message sendM = new Message(users.get(phoneNum).number, mText);
+                                users.get(phoneNum).sendMessage(num2, sendM, users.get(phoneNum).messages.get(num2).you);
+                            } else if (num3.equals("3")) {
+                                System.out.println("Enter the # of the message (the # in curly braces on the left) you wish to delete. Note: the other person can still view the message.");
+                                int numMessageDel = scan.nextInt();
+                                scan.nextLine();
+                                users.get(phoneNum).messages.get(num2).remove(users.get(phoneNum).messages.get(num2).m.size() - numMessageDel);
+                            } else if (num3.equals("4")) {
+                                users.get(phoneNum).messages.get(num2).erase();
+                                System.out.println("Conversation cleared. (Note: the other person can still view the conversation.");
+                            } else if (num3.equals("5")) {
+                                System.out.println("Enter the # of the message (the # in curly braces on the left) you wish to move.");
+                                int numMessageMove = scan.nextInt();
+                                System.out.println("Enter the # of the Conversation you wish to move this message to.");
+                                int numConvoMove = scan.nextInt();
+                                users.get(phoneNum).messages.get(num2).moveMessage(users.get(phoneNum).messages.get(num2).m.size() - numMessageMove, users.get(phoneNum).messages.get(numConvoMove));
+                                System.out.println("Message successfully moved.");
+                                scan.nextLine();
+                            } else if (num3.equals("6")) {
+                                break loop3;
+                            }
                         }
                     }
-
                 } else if (num1.equals("3")) {
                     break loop2;
                 } else {
