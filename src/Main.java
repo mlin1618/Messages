@@ -83,7 +83,7 @@ public class Main {
             for(int i = m.size()-1; i >= 0; i--){
                 SimpleDateFormat s = new SimpleDateFormat("MMM dd, yyyy; HH:mm");
                 Date d = new Date(m.get(i).time);
-                System.out.println("["+s.format(d) + "] <" + m.get(i).number + "> " + m.get(i).text);
+                System.out.println("{" + (m.size()-i) + "}" +"["+s.format(d) + "] <" + m.get(i).number + "> " + m.get(i).text);
             }
         }
     }
@@ -94,7 +94,9 @@ public class Main {
             System.out.println("Enter your phone number.");
             Scanner scan = new Scanner(System.in);
             String phoneNum = scan.nextLine();
-            users.put(phoneNum, new User(phoneNum));
+            if(!users.containsKey(phoneNum)){
+                users.put(phoneNum, new User(phoneNum));
+            }
             loop2:while(true) {
                 System.out.println("What would you like to do? \n (1) Create new Conversation with someone (2) Access a Conversation (3) Use new phone number (4) Exit");
                 String num1 = scan.nextLine();
@@ -118,10 +120,14 @@ public class Main {
                         System.out.println("What would you like to do? (1) Display Conversation (2) Send Message (3) Remove Message (4) Clear Conversation (5) Move Message to other Conversation (6) Leave Conversation");
                         String num3 = scan.nextLine();
                         if (num3.equals("1")) {
-
+                            users.get(phoneNum).messages.get(num2).display();
                         } else if (num3.equals("2")) {
-
+                            System.out.println("Enter the message you wish to send");
+                            String mText = scan.nextLine();
+                            Message sendM = new Message(users.get(phoneNum).number, mText);
+                            users.get(phoneNum).sendMessage(num2, sendM, users.get(phoneNum).messages.get(num2).you);
                         } else if (num3.equals("3")) {
+                            System.out.println("Enter the # of the message (in curly braces) you wish to delete");
 
                         } else if (num3.equals("4")) {
 
