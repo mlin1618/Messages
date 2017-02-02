@@ -80,6 +80,7 @@ public class Main {
             m.remove(position);
         }
         public void display(){
+            System.out.println("\n"+name+": ");
             for(int i = m.size()-1; i >= 0; i--){
                 SimpleDateFormat s = new SimpleDateFormat("MMM dd, yyyy; HH:mm");
                 Date d = new Date(m.get(i).time);
@@ -98,7 +99,7 @@ public class Main {
                 users.put(phoneNum, new User(phoneNum));
             }
             loop2:while(true) {
-                System.out.println("What would you like to do? \n (1) Create new Conversation with someone (2) Access a Conversation (3) Use new phone number (4) Exit");
+                System.out.println("\nWhat would you like to do? \n (1) Create new Conversation with someone (2) Access a Conversation (3) Use new phone number (4) Exit");
                 String num1 = scan.nextLine();
                 if (num1.equals("1")) {
                     System.out.println("Enter a name for this Conversation");
@@ -116,7 +117,8 @@ public class Main {
                     }
                     System.out.println("Enter the number (in the bracket) of the Conversation you want to access.");
                     int num2 = scan.nextInt();
-                    while(true) {
+                    scan.nextLine();
+                    loop3:while(true) {
                         System.out.println("What would you like to do? (1) Display Conversation (2) Send Message (3) Remove Message (4) Clear Conversation (5) Move Message to other Conversation (6) Leave Conversation");
                         String num3 = scan.nextLine();
                         if (num3.equals("1")) {
@@ -133,8 +135,8 @@ public class Main {
 
                         } else if (num3.equals("5")) {
 
-                        } else {
-
+                        } else if(num3.equals("6")){
+                            break loop3;
                         }
                     }
 
