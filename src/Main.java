@@ -16,6 +16,7 @@ public class Main {
             MessageList newML = new MessageList(name,this, two);
             this.messages.add(newML);
             MessageList newML2 = new MessageList(name,two,this);
+            newML2.key = newML.key;
             two.messages.add(newML2);
         }
         public boolean sendMessage(int num, Message me, User two){
@@ -24,6 +25,7 @@ public class Main {
             for(int i = 0; i < two.messages.size(); i++){
                 if(two.messages.get(i).key == this.messages.get(num).key){
                     index = i;
+                    break;
                 }
             }
             if(index == -1)
@@ -119,7 +121,7 @@ public class Main {
                     int num2 = scan.nextInt();
                     scan.nextLine();
                     loop3:while(true) {
-                        System.out.println("What would you like to do? (1) Display Conversation (2) Send Message (3) Remove Message (4) Clear Conversation (5) Move Message to other Conversation (6) Leave Conversation");
+                        System.out.println("\nWhat would you like to do? (1) Display Conversation (2) Send Message (3) Remove Message (4) Clear Conversation (5) Move Message to other Conversation (6) Leave Conversation");
                         String num3 = scan.nextLine();
                         if (num3.equals("1")) {
                             users.get(phoneNum).messages.get(num2).display();
@@ -129,12 +131,21 @@ public class Main {
                             Message sendM = new Message(users.get(phoneNum).number, mText);
                             users.get(phoneNum).sendMessage(num2, sendM, users.get(phoneNum).messages.get(num2).you);
                         } else if (num3.equals("3")) {
-                            System.out.println("Enter the # of the message (in curly braces) you wish to delete");
-
+                            System.out.println("Enter the # of the message (the # in curly braces on the left) you wish to delete. Note: the other person can still view the message.");
+                            int numMessageDel = scan.nextInt();
+                            scan.nextLine();
+                            users.get(phoneNum).messages.get(num2).remove(users.get(phoneNum).messages.get(num2).m.size() -numMessageDel);
                         } else if (num3.equals("4")) {
-
+                            users.get(phoneNum).messages.get(num2).erase();
+                            System.out.println("Conversation cleared. (Note: the other person can still view the conversation.");
                         } else if (num3.equals("5")) {
-
+                            System.out.println("Enter the # of the message (the # in curly braces on the left) you wish to move.");
+                            int numMessageMove = scan.nextInt();
+                            System.out.println("Enter the # of the Conversation you wish to move this message to.");
+                            int numConvoMove = scan.nextInt();
+                            users.get(phoneNum).messages.get(num2).moveMessage(users.get(phoneNum).messages.get(num2).m.size() -numMessageMove,users.get(phoneNum).messages.get(numConvoMove));
+                            System.out.println("Message successfully moved.");
+                            scan.nextLine();
                         } else if(num3.equals("6")){
                             break loop3;
                         }
